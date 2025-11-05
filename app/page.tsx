@@ -40,11 +40,9 @@ export default function Home() {
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 150 }}
-            className="w-24 h-24 bg-gradient-to-br from-orange to-orange-dark rounded-4xl mx-auto mb-8 flex items-center justify-center shadow-2xl"
+            className="mx-auto mb-8"
           >
-            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-            </svg>
+            <img src="/logo.jpg" alt="QR File Send" className="w-auto h-24 mx-auto rounded-3xl shadow-2xl object-contain p-2" />
           </motion.div>
 
           <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6">
