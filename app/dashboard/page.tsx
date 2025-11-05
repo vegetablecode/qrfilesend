@@ -172,7 +172,7 @@ function DashboardContent() {
 
     try {
       await updateDoc(doc(db, 'orders', orderId), {
-        status: 'archived'
+        deleted: true
       });
       toast.success('Order deleted');
     } catch (error) {
@@ -243,11 +243,11 @@ function DashboardContent() {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50">
       {/* Modern Navbar */}
       <nav className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-6 py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <img src="/logo.jpg" alt="QR File Send" className="h-10 w-auto" />
+              <img src="/logo.jpg" alt="QR File Send" className="h-9 w-auto" />
             </div>
 
             {/* Navigation Links */}
