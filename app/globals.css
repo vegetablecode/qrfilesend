@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #fef8f3;
+    --foreground: #1a1a1a;
+    
+    /* Orange color scale */
+    --color-orange-50: #fff5f0;
+    --color-orange-100: #ffe5d9;
+    --color-orange-200: #ffc9b3;
+    --color-orange-300: #ffa882;
+    --color-orange-400: #ff8c5a;
+    --color-orange-500: #ff6b35;
+    --color-orange-600: #e55a2b;
+    --color-orange-700: #c74a22;
+    --color-orange-800: #a33d1c;
+    --color-orange-900: #7d2f15;
+    --color-orange: #ff6b35;
+    --color-orange-light: #ff8c5a;
+    --color-orange-dark: #e55a2b;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #ff6b3550;
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff6b35;
+  }
+  
+  /* Ensure orange color utilities work */
+  .bg-orange {
+    background-color: #ff6b35 !important;
+  }
+  
+  .text-orange {
+    color: #ff6b35 !important;
+  }
+  
+  .border-orange {
+    border-color: #ff6b35 !important;
+  }
+  
+  .hover\:bg-orange-dark:hover {
+    background-color: #e55a2b !important;
+  }
+  
+  .hover\:text-orange-dark:hover {
+    color: #e55a2b !important;
+  }
+  
+  .bg-orange-50 {
+    background-color: #fff5f0 !important;
+  }
+  
+  .bg-orange-100 {
+    background-color: #ffe5d9 !important;
+  }
+  
+  .bg-orange-200 {
+    background-color: #ffe5d9 !important;
+  }
+  
+  .text-orange-600 {
+    color: #e55a2b !important;
+  }
+  
+  .text-orange-700 {
+    color: #c74a22 !important;
+  }
+  
+  .hover\:bg-orange:hover {
+    background-color: #ff6b35 !important;
+  }
+  
+  .hover\:bg-orange-50:hover {
+    background-color: #fff5f0 !important;
+  }
+}

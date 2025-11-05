@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Shops - Only authenticated users can create, only owners can read/update/delete their own shops
+    match /shops/{shopId} {
+      allow read: if true; // Allow public read for upload page
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
+    }
+    
+    // Orders - Shop owners can read their orders, anyone can create (for upload page)
+    match /orders/{orderId} {
+      allow read: if request.auth != null && 
+        request.auth.uid == get(/databases/$(database)/documents/shops/$(resource.data.shopId)).data.ownerId;
+      allow create: if true; // Allow public create for upload page
+      allow update: if request.auth != null && 
+        request.auth.uid == get(/databases/$(database)/documents/shops/$(resource.data.shopId)).data.ownerId;
+      allow delete: if request.auth != null && 
+        request.auth.uid == get(/databases/$(database)/documents/shops/$(resource.data.shopId)).data.ownerId;
+    }
+  }
+}

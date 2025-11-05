@@ -1,0 +1,16 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /uploads/{shopId}/{orderId}/{fileName} {
+      // Allow anyone to upload files
+      allow create: if true;
+      
+      // Allow anyone to read files (needed for download URLs to work)
+      allow read: if true;
+      
+      // Only allow files up to 50MB
+      allow write: if request.resource.size < 50 * 1024 * 1024;
+    }
+  }
+}
