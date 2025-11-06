@@ -59,6 +59,7 @@ function DashboardContent() {
   };
   const [orderTab, setOrderTab] = useState<'pending' | 'archived'>('pending');
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showShopDropdown, setShowShopDropdown] = useState(false);
 
   // Fetch shops
   useEffect(() => {
@@ -240,46 +241,46 @@ function DashboardContent() {
     : orders;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       {/* Modern Navbar */}
-      <nav className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-6 py-2">
+      <nav className="bg-white/95 backdrop-blur-xl border-b border-gray-200/50 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <img src="/logo.jpg" alt="QR File Send" className="h-9 w-auto" />
+              <img src="/logo.jpg" alt="QR File Send" className="h-10 w-auto" />
             </div>
 
             {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={() => handleTabChange('shops')}
-                className={`px-4 py-2 rounded-xl font-medium transition-all flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-full font-semibold transition-all flex items-center gap-2 text-sm ${
                   mainTab === 'shops'
-                    ? 'bg-orange text-white shadow-lg shadow-orange/30'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-orange text-white shadow-lg shadow-orange/25'
+                    : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <span>🏪</span>
                 <span>Shops</span>
                 <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                  mainTab === 'shops' ? 'bg-white/20' : 'bg-gray-200'
+                  mainTab === 'shops' ? 'bg-white/25' : 'bg-gray-200'
                 }`}>
                   {shops.length}
                 </span>
               </button>
               <button
                 onClick={() => handleTabChange('uploads')}
-                className={`px-4 py-2 rounded-xl font-medium transition-all flex items-center gap-2 ${
+                className={`px-5 py-2.5 rounded-full font-semibold transition-all flex items-center gap-2 text-sm ${
                   mainTab === 'uploads'
-                    ? 'bg-orange text-white shadow-lg shadow-orange/30'
-                    : 'text-gray-600 hover:bg-gray-100'
+                    ? 'bg-orange text-white shadow-lg shadow-orange/25'
+                    : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <span>📤</span>
                 <span>Uploads</span>
                 <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                  mainTab === 'uploads' ? 'bg-white/20' : 'bg-gray-200'
+                  mainTab === 'uploads' ? 'bg-white/25' : 'bg-gray-200'
                 }`}>
                   {orders.length}
                 </span>
@@ -298,7 +299,7 @@ function DashboardContent() {
                   </p>
                   <p className="text-xs text-gray-500">{user?.email}</p>
                 </div>
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                <div className="w-10 h-10 bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                   {user?.email?.[0].toUpperCase() || '👤'}
                 </div>
               </button>
@@ -317,9 +318,9 @@ function DashboardContent() {
                       exit={{ opacity: 0, scale: 0.95, y: -10 }}
                       className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden z-50"
                     >
-                      <div className="p-4 bg-gradient-to-br from-orange-50 to-purple-50 border-b border-gray-200">
+                      <div className="p-4 bg-linear-to-br from-orange-50 to-purple-50 border-b border-gray-200">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                          <div className="w-12 h-12 bg-linear-to-br from-blue-500 via-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
                             {user?.email?.[0].toUpperCase() || '👤'}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -387,7 +388,7 @@ function DashboardContent() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
         {/* Shops Tab */}
         {mainTab === 'shops' && (
           <motion.div
@@ -395,19 +396,22 @@ function DashboardContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
               <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">🏪 Your Shops</h2>
-                <p className="text-gray-600">Manage your print shops and generate QR codes</p>
+                <h2 className="text-4xl font-bold text-gray-900 mb-2">Your Shops</h2>
+                <p className="text-gray-600 text-lg">Manage your print shops and generate QR codes</p>
               </div>
-              <Button onClick={() => setShowNewShopModal(true)} className="shadow-lg shadow-orange/30">
-                <span className="mr-2">✨</span>
-                Add Shop
-              </Button>
+              <button 
+                onClick={() => setShowNewShopModal(true)} 
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-orange hover:bg-orange-600 text-white font-semibold rounded-full shadow-lg shadow-orange/25 transition-all duration-300 hover:scale-105"
+              >
+                <span className="text-lg">+</span>
+                <span>Add Shop</span>
+              </button>
             </div>
 
             {shops.length === 0 ? (
-              <Card className="text-center py-16 bg-gradient-to-br from-orange-50 to-purple-50 border-2 border-dashed border-orange-200">
+              <Card className="text-center py-16 bg-linear-to-br from-orange-50 to-purple-50 border-2 border-dashed border-orange-200">
                 <div className="text-6xl mb-4">🏪</div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-3">No shops yet</h3>
                 <p className="text-gray-600 mb-8 text-lg">Create your first shop to start receiving file uploads</p>
@@ -424,51 +428,45 @@ function DashboardContent() {
                     whileHover={{ scale: 1.02, y: -4 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <Card className="bg-gradient-to-br from-white to-orange-50 border-2 border-orange-100 shadow-lg">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="text-2xl">🏪</span>
-                            <h3 className="font-bold text-xl text-gray-900">{shop.name}</h3>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <span>📊</span>
-                            <span className="font-medium">
-                              {orders.filter(o => o.shopId === shop.id && (o.status === 'pending' || o.status === 'processing')).length}
-                            </span>
-                            <span>active orders</span>
-                          </div>
+                    <Card className="bg-linear-to-br from-white to-orange-50 border-2 border-orange-100 shadow-lg">
+                      <div className="mb-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-2xl">🏪</span>
+                          <h3 className="font-bold text-xl text-gray-900">{shop.name}</h3>
                         </div>
-                        <div className="flex gap-1">
-                          {shop.qrCodeUrl && (
-                            <>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  router.push(`/qr-designer/${shop.id}`);
-                                }}
-                                className="hover:bg-purple-100"
-                                title="Design printable QR"
-                              >
-                                <span className="text-lg">🎨</span>
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleDownloadQR(shop);
-                                }}
-                                className="hover:bg-orange-100"
-                                title="Download QR code"
-                              >
-                                <span className="text-lg">⬇️</span>
-                              </Button>
-                            </>
-                          )}
+                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+                          <span>📊</span>
+                          <span className="font-medium">
+                            {orders.filter(o => o.shopId === shop.id && (o.status === 'pending' || o.status === 'processing')).length}
+                          </span>
+                          <span>active orders</span>
                         </div>
+                        {shop.qrCodeUrl && (
+                          <div className="flex gap-2">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(`/qr-designer/${shop.id}`);
+                              }}
+                              className="flex items-center gap-2 px-4 py-2.5 bg-linear-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border-2 border-purple-200 hover:border-purple-300 text-purple-700 rounded-xl font-semibold text-sm transition-all hover:shadow-md hover:scale-105"
+                              title="Design printable QR"
+                            >
+                              <span className="text-base">🎨</span>
+                              <span>Design</span>
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDownloadQR(shop);
+                              }}
+                              className="flex items-center gap-2 px-4 py-2.5 bg-linear-to-br from-orange-50 to-yellow-50 hover:from-orange-100 hover:to-yellow-100 border-2 border-orange-200 hover:border-orange-300 text-orange-700 rounded-xl font-semibold text-sm transition-all hover:shadow-md hover:scale-105"
+                              title="Download QR code"
+                            >
+                              <span className="text-base">⬇️</span>
+                              <span>Download</span>
+                            </button>
+                          </div>
+                        )}
                       </div>
                       {shop.qrCodeUrl && (
                         <div className="bg-white p-4 rounded-xl border-2 border-orange-100 shadow-inner">
@@ -490,13 +488,109 @@ function DashboardContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">📤 File Uploads</h2>
-              <p className="text-gray-600">Manage customer uploads across all your shops</p>
+            <div className="mb-8 flex items-start justify-between">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">📤 File Uploads</h2>
+                <p className="text-gray-600">Manage customer uploads across all your shops</p>
+              </div>
+              
+              {/* Shop Filter - Top Right */}
+              {shops.length > 0 && (
+                <div className="relative">
+                  <button
+                    onClick={() => setShowShopDropdown(!showShopDropdown)}
+                    className="pl-12 pr-10 py-3 rounded-2xl font-semibold text-sm bg-linear-to-br from-orange-50 to-purple-50 border-2 border-orange-200 text-gray-900 hover:border-orange hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-orange/50 focus:border-orange shadow-md cursor-pointer min-w-[200px] flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{selectedShop ? '🏪' : '🌐'}</span>
+                      <span>{selectedShop ? selectedShop.name : 'All Shops'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-orange/20 text-orange">
+                        {selectedShop ? orders.filter(o => o.shopId === selectedShop.id).length : orders.length}
+                      </span>
+                      <svg 
+                        className={`w-4 h-4 text-orange transition-transform ${showShopDropdown ? 'rotate-180' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </button>
+
+                  {/* Custom Dropdown */}
+                  <AnimatePresence>
+                    {showShopDropdown && (
+                      <>
+                        <div 
+                          className="fixed inset-0 z-40" 
+                          onClick={() => setShowShopDropdown(false)}
+                        />
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border-2 border-gray-200 overflow-hidden z-50"
+                        >
+                          <div className="max-h-80 overflow-y-auto">
+                            <button
+                              onClick={() => {
+                                setSelectedShop(null);
+                                setShowShopDropdown(false);
+                              }}
+                              className={`w-full px-4 py-3 flex items-center justify-between hover:bg-orange-50 transition-colors ${
+                                !selectedShop ? 'bg-orange-50' : ''
+                              }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className="text-xl">🌐</span>
+                                <span className="font-semibold text-gray-900">All Shops</span>
+                              </div>
+                              <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                                !selectedShop ? 'bg-orange text-white' : 'bg-gray-200 text-gray-700'
+                              }`}>
+                                {orders.length}
+                              </span>
+                            </button>
+                            <div className="border-t border-gray-200" />
+                            {shops.map((shop) => {
+                              const shopOrders = orders.filter(o => o.shopId === shop.id);
+                              return (
+                                <button
+                                  key={shop.id}
+                                  onClick={() => {
+                                    setSelectedShop(shop);
+                                    setShowShopDropdown(false);
+                                  }}
+                                  className={`w-full px-4 py-3 flex items-center justify-between hover:bg-orange-50 transition-colors ${
+                                    selectedShop?.id === shop.id ? 'bg-orange-50' : ''
+                                  }`}
+                                >
+                                  <div className="flex items-center gap-3">
+                                    <span className="text-xl">🏪</span>
+                                    <span className="font-semibold text-gray-900 truncate">{shop.name}</span>
+                                  </div>
+                                  <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                                    selectedShop?.id === shop.id ? 'bg-orange text-white' : 'bg-gray-200 text-gray-700'
+                                  }`}>
+                                    {shopOrders.length}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      </>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )}
             </div>
 
-            {/* Shop Filter */}
-            {shops.length > 0 && (
+            {/* Shop Filter - Mobile Only */}
+            {shops.length > 0 && false && (
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-900 mb-3">🏪 Filter by Shop</label>
                 <div className="flex gap-3 flex-wrap">
@@ -553,6 +647,7 @@ function DashboardContent() {
                   </svg>
                 }
                 color="yellow"
+                status="pending"
                 orders={orders.filter(o => o.status === 'pending' && (!selectedShop || o.shopId === selectedShop.id))}
                 shops={shops}
                 onUpdateStatus={handleUpdateOrderStatus}
@@ -568,6 +663,7 @@ function DashboardContent() {
                   </svg>
                 }
                 color="blue"
+                status="processing"
                 orders={orders.filter(o => o.status === 'processing' && (!selectedShop || o.shopId === selectedShop.id))}
                 shops={shops}
                 onUpdateStatus={handleUpdateOrderStatus}
@@ -583,6 +679,7 @@ function DashboardContent() {
                   </svg>
                 }
                 color="green"
+                status="completed"
                 orders={orders.filter(o => o.status === 'completed' && (!selectedShop || o.shopId === selectedShop.id))}
                 shops={shops}
                 onUpdateStatus={handleUpdateOrderStatus}
@@ -598,6 +695,7 @@ function DashboardContent() {
                   </svg>
                 }
                 color="gray"
+                status="archived"
                 orders={orders.filter(o => o.status === 'archived' && (!selectedShop || o.shopId === selectedShop.id))}
                 shops={shops}
                 onUpdateStatus={handleUpdateOrderStatus}
@@ -627,7 +725,7 @@ function DashboardContent() {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-md"
             >
-              <Card className="bg-gradient-to-br from-white to-orange-50 border-2 border-orange-100">
+              <Card className="bg-linear-to-br from-white to-orange-50 border-2 border-orange-100">
                 <div className="text-center mb-6">
                   <div className="text-5xl mb-3">🏪</div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">Create New Shop</h3>
@@ -679,6 +777,7 @@ function KanbanColumn({
   onDeleteOrder,
   onClearAll,
   isLoading,
+  status,
 }: {
   title: string;
   icon: React.ReactNode;
@@ -689,31 +788,55 @@ function KanbanColumn({
   onDeleteOrder?: (id: string) => void;
   onClearAll?: () => void;
   isLoading?: boolean;
+  status: Order['status'];
 }) {
+  const [isDraggingOver, setIsDraggingOver] = useState(false);
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOver(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDraggingOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingOver(false);
+    
+    const orderId = e.dataTransfer.getData('orderId');
+    const fromStatus = e.dataTransfer.getData('status');
+    
+    if (orderId && fromStatus !== status) {
+      onUpdateStatus(orderId, status);
+      toast.success('Order moved!');
+    }
+  };
   const colorStyles = {
     yellow: {
-      bg: 'bg-gradient-to-br from-yellow-50 to-orange-50',
+      bg: 'bg-linear-to-br from-yellow-50 to-orange-50',
       border: 'border-yellow-300',
       text: 'text-yellow-800',
       badge: 'bg-yellow-200 text-yellow-900',
       emptyBg: 'bg-yellow-50/50',
     },
     blue: {
-      bg: 'bg-gradient-to-br from-blue-50 to-cyan-50',
+      bg: 'bg-linear-to-br from-blue-50 to-cyan-50',
       border: 'border-blue-300',
       text: 'text-blue-800',
       badge: 'bg-blue-200 text-blue-900',
       emptyBg: 'bg-blue-50/50',
     },
     green: {
-      bg: 'bg-gradient-to-br from-green-50 to-emerald-50',
+      bg: 'bg-linear-to-br from-green-50 to-emerald-50',
       border: 'border-green-300',
       text: 'text-green-800',
       badge: 'bg-green-200 text-green-900',
       emptyBg: 'bg-green-50/50',
     },
     gray: {
-      bg: 'bg-gradient-to-br from-gray-50 to-slate-50',
+      bg: 'bg-linear-to-br from-gray-50 to-slate-50',
       border: 'border-gray-300',
       text: 'text-gray-800',
       badge: 'bg-gray-200 text-gray-900',
@@ -750,7 +873,14 @@ function KanbanColumn({
       </div>
 
       {/* Column Content */}
-      <div className="flex-1 space-y-3 min-h-[200px]">
+      <div 
+        className={`flex-1 space-y-3 min-h-[200px] rounded-2xl transition-all ${
+          isDraggingOver ? `${styles.bg} ${styles.border} border-2 border-dashed` : ''
+        }`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+      >
         <AnimatePresence>
           {orders.length === 0 ? (
             <motion.div
@@ -793,15 +923,25 @@ function KanbanCard({
   onUpdateStatus: (id: string, status: Order['status']) => void;
   onDeleteOrder?: (id: string) => void;
 }) {
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData('orderId', order.id);
+    e.dataTransfer.setData('status', order.status);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      layout
-      whileHover={{ scale: 1.02, y: -2 }}
-      className="bg-white rounded-2xl p-4 shadow-lg border-2 border-gray-100 hover:shadow-xl hover:border-orange-200 transition-all"
+    <div
+      draggable
+      onDragStart={handleDragStart}
+      className="cursor-move"
     >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        whileHover={{ scale: 1.02, y: -2 }}
+        className="bg-white rounded-2xl p-4 shadow-lg border-2 border-gray-100 hover:shadow-xl hover:border-orange-200 transition-all"
+      >
       {/* Card Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
@@ -818,7 +958,7 @@ function KanbanCard({
         </div>
         <div className="flex items-center gap-1">
           {shop && (
-            <span className="px-2 py-1 rounded-lg text-xs font-medium bg-gradient-to-r from-orange-50 to-purple-50 text-orange-700 border border-orange-200">
+            <span className="px-2 py-1 rounded-lg text-xs font-medium bg-linear-to-r from-orange-50 to-purple-50 text-orange-700 border border-orange-200">
               🏪 {shop.name}
             </span>
           )}
@@ -837,20 +977,28 @@ function KanbanCard({
       {/* Files */}
       <div className="space-y-2 mb-3">
         {order.files.map((file) => (
-          <div key={file.id} className="flex items-center gap-2 p-2 bg-gradient-to-r from-gray-50 to-orange-50 rounded-lg border border-gray-100">
-            <span className="text-lg flex-shrink-0">📄</span>
+          <div key={file.id} className="flex items-center gap-2 p-2 bg-linear-to-r from-gray-50 to-orange-50 rounded-lg border border-gray-100">
+            <span className="text-lg shrink-0">📄</span>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium text-gray-900 truncate">{file.name}</p>
               <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(1)} MB</p>
             </div>
-            <a
-              href={file.url}
-              download={file.name}
-              className="p-1.5 text-orange hover:bg-orange-100 rounded-lg transition-colors flex-shrink-0"
+            <button
+              onClick={() => {
+                const a = document.createElement('a');
+                a.href = file.url;
+                a.download = file.name;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+              }}
+              className="p-1.5 text-orange hover:bg-orange-100 rounded-lg transition-colors shrink-0"
               title="Download file"
             >
               <span className="text-base">⬇️</span>
-            </a>
+            </button>
           </div>
         ))}
       </div>
@@ -859,7 +1007,7 @@ function KanbanCard({
       {order.status === 'pending' && (
         <button
           onClick={() => onUpdateStatus(order.id, 'processing')}
-          className="w-full px-3 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+          className="w-full px-3 py-2.5 bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
         >
           <span>⚡</span>
           <span>Start Processing</span>
@@ -868,7 +1016,7 @@ function KanbanCard({
       {order.status === 'processing' && (
         <button
           onClick={() => onUpdateStatus(order.id, 'completed')}
-          className="w-full px-3 py-2.5 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+          className="w-full px-3 py-2.5 bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-sm font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
         >
           <span>✅</span>
           <span>Mark Completed</span>
@@ -877,13 +1025,14 @@ function KanbanCard({
       {order.status === 'completed' && (
         <button
           onClick={() => onUpdateStatus(order.id, 'archived')}
-          className="w-full px-3 py-2.5 bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white text-sm font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+          className="w-full px-3 py-2.5 bg-linear-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white text-sm font-medium rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
         >
           <span>📦</span>
           <span>Archive</span>
         </button>
       )}
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -942,15 +1091,23 @@ function OrderCard({
                 <p className="text-sm font-medium text-gray-900 truncate">{file.name}</p>
                 <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
               </div>
-              <a
-                href={file.url}
-                download={file.name}
+              <button
+                onClick={() => {
+                  const a = document.createElement('a');
+                  a.href = file.url;
+                  a.download = file.name;
+                  a.target = '_blank';
+                  a.rel = 'noopener noreferrer';
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                }}
                 className="text-orange hover:text-orange-dark"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-              </a>
+              </button>
             </div>
           ))}
         </div>

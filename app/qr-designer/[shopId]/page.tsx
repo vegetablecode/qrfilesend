@@ -36,6 +36,9 @@ export default function QRDesignerPage() {
   const [instruction1, setInstruction1] = useState('📱 Open your camera');
   const [instruction2, setInstruction2] = useState('📷 Point at the QR code');
   const [instruction3, setInstruction3] = useState('📤 Upload your files');
+  const [customLogo, setCustomLogo] = useState<string>('');
+  const [logoSize, setLogoSize] = useState(64);
+  const logoInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchShop = async () => {
@@ -132,7 +135,7 @@ export default function QRDesignerPage() {
   return (
     <>
       {/* Editor Interface - Hidden in print */}
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50 print:hidden">
+      <div className="min-h-screen bg-linear-to-br from-orange-50 via-white to-purple-50 print:hidden">
         <div className="container mx-auto px-4 py-8">
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
@@ -307,6 +310,74 @@ export default function QRDesignerPage() {
                     <span className="text-gray-700">Show Logo</span>
                   </label>
 
+                  {showLogo && (
+                    <div className="pt-3 border-t border-gray-200">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Custom Logo</label>
+                      <input
+                        ref={logoInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              setCustomLogo(reader.result as string);
+                              toast.success('Logo uploaded! 🎨');
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="hidden"
+                      />
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => logoInputRef.current?.click()}
+                          className="flex-1 px-4 py-3 bg-linear-to-br from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 border-2 border-purple-200 hover:border-purple-300 text-purple-700 rounded-xl font-semibold text-sm transition-all hover:shadow-md flex items-center justify-center gap-2"
+                        >
+                          <span>📤</span>
+                          <span>Upload Logo</span>
+                        </button>
+                        {customLogo && (
+                          <button
+                            onClick={() => {
+                              setCustomLogo('');
+                              toast.success('Logo removed');
+                            }}
+                            className="px-4 py-3 bg-red-50 hover:bg-red-100 border-2 border-red-200 hover:border-red-300 text-red-700 rounded-xl font-semibold text-sm transition-all hover:shadow-md"
+                          >
+                            🗑️
+                          </button>
+                        )}
+                      </div>
+                      {customLogo && (
+                        <>
+                          <div className="mt-3 p-3 bg-gray-50 rounded-xl border-2 border-gray-200">
+                            <img src={customLogo} alt="Custom Logo" className="h-16 w-auto mx-auto" />
+                          </div>
+                          <div className="mt-3">
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                              Logo Size: {logoSize}px
+                            </label>
+                            <input
+                              type="range"
+                              min="32"
+                              max="128"
+                              value={logoSize}
+                              onChange={(e) => setLogoSize(Number(e.target.value))}
+                              className="w-full"
+                            />
+                            <div className="flex justify-between text-xs text-gray-500 mt-1">
+                              <span>Small</span>
+                              <span>Medium</span>
+                              <span>Large</span>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
+
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
@@ -388,7 +459,12 @@ export default function QRDesignerPage() {
                   >
                     {showLogo && (
                       <div className="mb-6">
-                        <img src="/logo.jpg" alt="Logo" className="h-16 w-auto" />
+                        <img 
+                          src={customLogo || "/logo.jpg"} 
+                          alt="Logo" 
+                          style={{ height: `${logoSize}px` }}
+                          className="w-auto" 
+                        />
                       </div>
                     )}
 
@@ -450,7 +526,12 @@ export default function QRDesignerPage() {
         >
           {showLogo && (
             <div className="mb-12">
-              <img src="/logo.jpg" alt="Logo" className="h-24 w-auto" />
+              <img 
+                src={customLogo || "/logo.jpg"} 
+                alt="Logo" 
+                style={{ height: `${logoSize * 1.5}px` }}
+                className="w-auto" 
+              />
             </div>
           )}
 

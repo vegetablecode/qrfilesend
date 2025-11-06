@@ -79,7 +79,10 @@ export default function UploadPage() {
         const file = files[i];
         const storageRef = ref(storage, `uploads/${shopId}/${orderNum}/${file.name}`);
         
-        await uploadBytes(storageRef, file);
+        // Upload with metadata to force download
+        await uploadBytes(storageRef, file, {
+          contentDisposition: `attachment; filename="${file.name}"`,
+        });
         const downloadURL = await getDownloadURL(storageRef);
 
         uploadedFiles.push({
@@ -197,7 +200,7 @@ export default function UploadPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-br from-orange to-orange-dark rounded-3xl mx-auto mb-4 flex items-center justify-center">
+          <div className="w-16 h-16 bg-linear-to-br from-orange to-orange-dark rounded-3xl mx-auto mb-4 flex items-center justify-center">
             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
@@ -246,7 +249,7 @@ export default function UploadPage() {
                     exit={{ opacity: 0, x: 20 }}
                     className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl"
                   >
-                    <svg className="w-6 h-6 text-orange flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-orange shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                     </svg>
                     <div className="flex-1 min-w-0">
@@ -277,7 +280,7 @@ export default function UploadPage() {
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${uploadProgress}%` }}
-                  className="h-full bg-gradient-to-r from-orange to-orange-light"
+                  className="h-full bg-linear-to-r from-orange to-orange-light"
                 />
               </div>
             </div>

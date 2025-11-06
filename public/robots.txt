@@ -1,0 +1,10 @@
+# robots.txt for QR Code File Transfer
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /upload/
+Disallow: /qr-designer/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://qrfilesend.com/sitemap.xml
